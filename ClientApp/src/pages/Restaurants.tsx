@@ -7,10 +7,15 @@ import { RestaurantType } from '../types/types'
 import { SingleRestaurantFromList } from '../components/SingleRestaurantFromList'
 
 export function Restaurants() {
+  const [filterText, setFilterText] = React.useState('')
   const { data: restaurants = [] } = useQuery<RestaurantType[]>(
-    'restaurants',
+    ['restaurants', filterText],
     async function () {
-      const response = await fetch('/api/restaurants')
+      const response = await fetch(
+        filterText.length === 0
+          ? '/api/restaurants'
+          : `/api/restaurants?filter=${filterText}`
+      )
       return response.json()
     }
   )
@@ -21,7 +26,12 @@ export function Restaurants() {
         <img src={tacoTuesday} alt="Taco Tuesday" />
       </h1>
       <form className="search">
-        <input type="text" placeholder="Search..." />
+        <input
+          type="text"
+          placeholder="Search..."
+          value={filterText}
+          onChange={(e) => setFilterText(e.target.value)}
+        />
       </form>
 
       <section className="map">
