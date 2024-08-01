@@ -1,5 +1,5 @@
 import React from 'react'
-import { RestaurantType } from '../types/types'
+import { APIError, RestaurantType } from '../types/types'
 import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router'
 
@@ -10,11 +10,16 @@ async function submitNewRestaurant(restaurantToCreate: RestaurantType) {
     body: JSON.stringify(restaurantToCreate),
   })
 
-  return response.json()
+  if (response.ok) {
+    return response.json()
+  } else {
+    throw await response.json()
+  }
 }
 
 export function NewRestaurant() {
   const navigate = useNavigate()
+  const [errorMessage, setErrorMessage] = React.useState('')
 
   const [newRestaurant, setNewRestaurant] = React.useState<RestaurantType>({
     id: undefined,
@@ -28,9 +33,9 @@ export function NewRestaurant() {
     onSuccess: function () {
       navigate('/')
     },
-    // onError: function (apiError: APIError) {
-    //   setErrorMessage(Object.values(apiError.console.errors).join(' '))
-    // },
+    onError: function (apiError: APIError) {
+      setErrorMessage(Object.values(apiError.errors).join(' '))
+    },
   })
   function handleStringFieldChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -57,6 +62,7 @@ export function NewRestaurant() {
           createNewRestaurant.mutate(newRestaurant)
         }}
       >
+        {errorMessage ? <p className={'form-error'}>{errorMessage}</p> : null}
         <p className="form-input">
           <label htmlFor="name">Name</label>
           <input
