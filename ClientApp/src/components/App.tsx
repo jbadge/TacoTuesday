@@ -6,7 +6,7 @@ import { Restaurants } from './pages/Restaurants'
 import { Restaurant } from './pages/Restaurant'
 import { SignUp } from './pages/SignUp'
 import { SignIn } from './pages/SignIn'
-import avatar from '../src/images/avatar.png'
+import avatar from './images/avatar.png'
 
 export function App() {
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import {
   CSSStarsProperties,
   NullRestaurant,
@@ -28,9 +28,9 @@ export function Restaurant() {
   return (
     <main className="page">
       <nav>
-        <a href="/">
+        <Link to="/">
           <i className="fa fa-home"></i>
-        </a>
+        </Link>
         <h2>{restaurant.name}</h2>
       </nav>
       <p>

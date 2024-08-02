@@ -2,6 +2,7 @@ import React from 'react'
 import { APIError, RestaurantType } from '../types/types'
 import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
 
 async function submitNewRestaurant(restaurantToCreate: RestaurantType) {
   const response = await fetch('/api/Restaurants', {
@@ -48,27 +49,30 @@ export function NewRestaurant() {
     setNewRestaurant(updatedRestaurant)
   }
 
+  async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    createNewRestaurant.mutate(newRestaurant)
+  }
+
   return (
     <main className="page">
       <nav>
-        <a href="/">
+        <Link to="/">
           <i className="fa fa-home"></i>
-        </a>
+        </Link>
         <h2>Add a Restaurant</h2>
       </nav>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault()
-          createNewRestaurant.mutate(newRestaurant)
-        }}
-      >
-        {errorMessage ? <p className={'form-error'}>{errorMessage}</p> : null}
+      <form onSubmit={handleFormSubmit}>
+        {errorMessage ? <p className="form-error">{errorMessage}</p> : null}
         <p className="form-input">
           <label htmlFor="name">Name</label>
           <input
             type="text"
+            className="form-control"
             name="name"
             value={newRestaurant.name}
+            required
             onChange={handleStringFieldChange}
           />
         </p>
@@ -88,6 +92,7 @@ export function NewRestaurant() {
           <textarea
             name="address"
             value={newRestaurant.address}
+            required
             onChange={handleStringFieldChange}
           ></textarea>
         </p>
