@@ -82,12 +82,17 @@ namespace TacoTuesday.Migrations
             modelBuilder.Entity("TacoTuesday.Models.Review", b =>
                 {
                     b.HasOne("TacoTuesday.Models.Restaurant", "Restaurant")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("TacoTuesday.Models.Restaurant", b =>
+                {
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }
