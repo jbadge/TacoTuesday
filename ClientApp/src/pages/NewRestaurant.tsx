@@ -28,6 +28,7 @@ export function NewRestaurant() {
     description: '',
     address: '',
     telephone: '',
+    reviews: [],
   })
 
   const createNewRestaurant = useMutation(submitNewRestaurant, {

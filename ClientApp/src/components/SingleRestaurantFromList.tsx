@@ -18,7 +18,7 @@ export function SingleRestaurantFromList({
           style={{ '--rating': 4.7 } as CSSStarsProperties}
           aria-label="Star rating of this location is 4.7 out of 5."
         ></span>
-        (2,188)
+        {restaurant.reviews.length}
       </p>
       <address>{restaurant.address}</address>
     </li>
