@@ -1,12 +1,13 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { useMutation, useQuery } from 'react-query'
+import { format } from 'date-fns/format'
 import {
   CSSStarsProperties,
   NullRestaurant,
   RestaurantType,
   ReviewType,
 } from '../types/types'
-import { useMutation, useQuery } from 'react-query'
 
 async function loadOneRestaurant(id: string) {
   const response = await fetch(`/api/restaurants/${id}`)
@@ -31,6 +32,8 @@ async function submitNewReview(review: ReviewType) {
     throw await response.json()
   }
 }
+
+const dateFormat = `EEEE, MMMM do, yyyy 'at' h:mm aaa`
 
 export function Restaurant() {
   const { id } = useParams() as { id: string }
@@ -106,7 +109,11 @@ export function Restaurant() {
                 style={{ '--rating': review.stars } as CSSStarsProperties}
                 aria-label={`Star rating of this location is ${review.stars} out of 5.`}
               ></span>
-              <time>{review.createdAt}</time>
+              <time>
+                {review.createdAt
+                  ? format(new Date(review.createdAt), dateFormat)
+                  : null}
+              </time>
             </div>
           </li>
         ))}
