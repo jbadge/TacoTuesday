@@ -1,7 +1,7 @@
 import React from 'react'
-import { APIError, NewUserType } from '../types/types'
 import { useNavigate } from 'react-router'
 import { useMutation } from 'react-query'
+import { APIError, NewUserType } from '../types/types'
 
 async function submitNewUser(newUser: NewUserType) {
   const response = await fetch('/api/Users', {
@@ -85,6 +85,7 @@ export function SignUp() {
             onChange={handleStringFieldChange}
           />
         </p>
+
         <p className="form-input">
           <label htmlFor="password">Password</label>
           <input
@@ -94,6 +95,7 @@ export function SignUp() {
             onChange={handleStringFieldChange}
           />
         </p>
+
         <p>
           <input type="submit" value="Submit" />
         </p>
