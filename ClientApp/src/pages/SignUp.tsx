@@ -76,6 +76,7 @@ export function SignUp() {
             onChange={handleStringFieldChange}
           />
         </p>
+
         <p className="form-input">
           <label htmlFor="name">Email</label>
           <input
