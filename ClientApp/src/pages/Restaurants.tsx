@@ -4,7 +4,7 @@ import { useQuery } from 'react-query'
 import map from '../images/map.png'
 import tacoTuesday from '../images/taco-tuesday.svg'
 import { RestaurantType } from '../types/types'
-import { SingleRestaurantFromList } from '../components/SingleRestaurantFromList'
+import { SingleRestaurantFromList } from './SingleRestaurantFromList'
 
 export function Restaurants() {
   const [filterText, setFilterText] = React.useState('')
