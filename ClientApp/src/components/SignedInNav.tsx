@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { getUser, logout } from '../types/auth'
-import avatar from '../src/images/avatar.png'
+import avatar from '../images/avatar.png'
 
 const SignedInNav = () => {
   const user = getUser()
