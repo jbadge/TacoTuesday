@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 import { NewRestaurant } from './pages/NewRestaurant'
 import { Restaurants } from './pages/Restaurants'
@@ -7,25 +7,29 @@ import { Restaurant } from './pages/Restaurant'
 import { SignUp } from './pages/SignUp'
 import { SignIn } from './pages/SignIn'
 import avatar from '../src/images/avatar.png'
+import { getUser, isLoggedIn } from './types/auth'
+import SignedOutNav from './components/SignedOutNav'
+import LoggedInNav from './components/LoggedInNav'
 
 export function App() {
+  const user = getUser()
   return (
     <>
       <header>
         <ul>
           <li>
-            <nav>
-              <Link to="/new">
-                <i className="fa fa-plus"></i> Restaurant
-              </Link>
-              <Link to="/signin">Sign In</Link>
-              <Link to="/signup">Sign Up</Link>
-              <p>Welcome back, Steve!</p>
-            </nav>
+            <nav>{isLoggedIn() ? <LoggedInNav /> : <SignedOutNav />}</nav>
           </li>
-          <li className="avatar">
-            <img src={avatar} alt="Steve's Avatar" height="64" width="64" />
-          </li>
+          {isLoggedIn() ? (
+            <li className="avatar">
+              <img
+                src={avatar}
+                alt={`${user.fullName} Avatar`}
+                height="64"
+                width="64"
+              />
+            </li>
+          ) : null}
         </ul>
       </header>
 
