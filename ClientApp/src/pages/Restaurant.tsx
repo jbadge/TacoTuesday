@@ -4,9 +4,9 @@ import { useMutation, useQuery } from 'react-query'
 import { format } from 'date-fns/format'
 import {
   CSSStarsProperties,
+  NewReviewType,
   NullRestaurant,
   RestaurantType,
-  ReviewType,
 } from '../types/types'
 import { authHeader, isLoggedIn } from '../types/auth'
 
@@ -20,7 +20,7 @@ async function loadOneRestaurant(id: string) {
   }
 }
 
-async function submitNewReview(review: ReviewType) {
+async function submitNewReview(review: NewReviewType) {
   const response = await fetch(`/api/Reviews`, {
     method: 'POST',
     headers: {
@@ -41,7 +41,7 @@ const dateFormat = `EEEE, MMMM do, yyyy 'at' h:mm aaa`
 
 export function Restaurant() {
   const { id } = useParams() as { id: string }
-  const [newReview, setNewReview] = React.useState<ReviewType>({
+  const [newReview, setNewReview] = React.useState<NewReviewType>({
     body: '',
     stars: 5,
     summary: '',
@@ -102,7 +102,10 @@ export function Restaurant() {
         {restaurant.reviews.map((review) => (
           <li key={review.id}>
             <div className="author">
-              Gavin said: <em>{review.summary}</em>
+              {/* <a href={`mailto:${review.user.email}`}> */}
+              {review.user.fullName}
+              {/* </a>{' '} */}
+              said: <em>{review.summary}</em>
             </div>
             <div className="body">
               <p>{review.body}</p>

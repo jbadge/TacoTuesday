@@ -13,6 +13,14 @@ export type RestaurantType = {
   reviews: ReviewType[]
 }
 
+export const NullRestaurant: RestaurantType = {
+  name: '',
+  address: '',
+  description: '',
+  telephone: '',
+  reviews: [],
+}
+
 export type APIError = {
   errors: Record<string, string[]>
   status: number
@@ -28,14 +36,16 @@ export type ReviewType = {
   stars: number
   createdAt?: Date
   restaurantId: number
+  user: LoggedInUser
 }
 
-export const NullRestaurant: RestaurantType = {
-  name: '',
-  address: '',
-  description: '',
-  telephone: '',
-  reviews: [],
+export type NewReviewType = {
+  id?: number
+  summary: string
+  body: string
+  stars: number
+  createdAt?: Date
+  restaurantId: number
 }
 
 export type NewUserType = {
