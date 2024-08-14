@@ -12,5 +12,9 @@ namespace TacoTuesday.Models
 
         public int RestaurantId { get; set; }
         public Restaurant Restaurant { get; set; }
+
+        public int UserId { get; set; }
+
+        public User User { get; set; }
     }
 }

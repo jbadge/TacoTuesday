@@ -8,7 +8,7 @@ import {
   RestaurantType,
   ReviewType,
 } from '../types/types'
-import { isLoggedIn } from '../types/auth'
+import { authHeader, isLoggedIn } from '../types/auth'
 
 async function loadOneRestaurant(id: string) {
   const response = await fetch(`/api/restaurants/${id}`)
@@ -23,7 +23,10 @@ async function loadOneRestaurant(id: string) {
 async function submitNewReview(review: ReviewType) {
   const response = await fetch(`/api/Reviews`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      Authorization: authHeader(),
+    },
     body: JSON.stringify(review),
   })
 

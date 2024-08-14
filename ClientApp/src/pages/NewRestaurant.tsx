@@ -3,11 +3,15 @@ import { APIError, RestaurantType } from '../types/types'
 import { useMutation } from 'react-query'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
+import { authHeader } from '../types/auth'
 
 async function submitNewRestaurant(restaurantToCreate: RestaurantType) {
   const response = await fetch('/api/Restaurants', {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      Authorization: authHeader(),
+    },
     body: JSON.stringify(restaurantToCreate),
   })
 
