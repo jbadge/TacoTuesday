@@ -119,7 +119,7 @@ export function Restaurant() {
           </li>
         ))}
       </ul>
-
+      {/* Abstract to component */}
       {isLoggedIn() ? (
         <form
           onSubmit={function (event) {

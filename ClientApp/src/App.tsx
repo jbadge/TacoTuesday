@@ -6,32 +6,15 @@ import { Restaurants } from './pages/Restaurants'
 import { Restaurant } from './pages/Restaurant'
 import { SignUp } from './pages/SignUp'
 import { SignIn } from './pages/SignIn'
-import avatar from '../src/images/avatar.png'
-import { getUser, isLoggedIn } from './types/auth'
+
+import { isLoggedIn } from './types/auth'
 import SignedOutNav from './components/SignedOutNav'
-import LoggedInNav from './components/LoggedInNav'
+import SignedInNav from './components/SignedInNav'
 
 export function App() {
-  const user = getUser()
   return (
     <>
-      <header>
-        <ul>
-          <li>
-            <nav>{isLoggedIn() ? <LoggedInNav /> : <SignedOutNav />}</nav>
-          </li>
-          {isLoggedIn() ? (
-            <li className="avatar">
-              <img
-                src={avatar}
-                alt={`${user.fullName} Avatar`}
-                height="64"
-                width="64"
-              />
-            </li>
-          ) : null}
-        </ul>
-      </header>
+      <header>{isLoggedIn() ? <SignedInNav /> : <SignedOutNav />}</header>
 
       <Routes>
         <Route path="/" element={<Restaurants />} />
@@ -39,7 +22,6 @@ export function App() {
         <Route path="/restaurants/:id" element={<Restaurant />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        {/* <Route path='/restaurant/:id/edit' element={<EditRestaurant/>}/> */}
       </Routes>
 
       <footer>
