@@ -1,11 +1,15 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using TacoTuesday.Models;
 
 namespace TacoTuesday.Controllers
@@ -19,12 +23,14 @@ namespace TacoTuesday.Controllers
     {
         // This is the variable you use to have access to your database
         private readonly DatabaseContext _context;
+        private readonly string GOOGLE_MAPS_KEY;
 
         // Constructor that receives a reference to your database context
         // and stores it in _context for you to use in your API methods
-        public RestaurantsController(DatabaseContext context)
+        public RestaurantsController(DatabaseContext context, IConfiguration config)
         {
             _context = context;
+            GOOGLE_MAPS_KEY = config["GOOGLE_MAPS_KEY"];
         }
 
         // GET: api/Restaurants
@@ -151,6 +157,32 @@ namespace TacoTuesday.Controllers
         {
             // Set the UserID to the current user id, this overrides anything the user specifies.
             restaurant.UserId = GetCurrentUserId();
+
+            // BEGINNING GOOGLE MAPS
+            //////////////////////////////////////////////////////////////////////////
+            // var geocodedAddress = "https://maps.googleapis.com/maps/api/geocode/json?address=" + restaurant.Address + "&key=" + GOOGLE_MAPS_KEY;
+            // Console.WriteLine(geocodedAddress);
+            // WebRequest request = WebRequest.Create(geocodedAddress);
+
+            // WebResponse response = request.GetResponse();
+            // Console.WriteLine(response);
+
+            // Stream data = response.GetResponseStream();
+
+            // StreamReader reader = new StreamReader(data);
+
+            // // json-formatted string from maps api
+            // string bestGeocodedAddress = reader.ReadToEnd();
+            // // if (bestGeocodedAddress != null)
+            // // {
+            // //     restaurant.Latitude = bestGeocodedAddress.res;
+            // //     restaurant.Longitude = bestGeocodedAddress.Coordinates.Longitude;
+            // // }
+            // response.Close();
+            //////////////////////////////////////////////////////////////////////////
+            ///// ENDING GOOGLE MAPS
+
+
 
             // Indicate to the database context we want to add this new record
             _context.Restaurants.Add(restaurant);
